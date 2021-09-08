@@ -38,11 +38,33 @@ function createMap(earthquakes) {
       zoom: 5,
       layers: [lightmap, earthquakes]
     });
+
+    var legend = L.control({position: 'bottomright'});
+
+    legend.onAdd = function (myMap) {
+
+    var div = L.DomUtil.create('div', 'info legend'),
+        grades = [-10, 10, 30, 50, 70, 90],
+        labels = [];
+
+    
+    for (var i = 0; i < grades.length; i++) {
+        div.innerHTML +=
+            '<i style="background:' + markerColor(grades[i] + 1) + '"></i> ' +
+            grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+        }
+
+    return div;
+    };
+
+    legend.addTo(myMap);
   
     L.control.layers(baseMaps, overlayMaps, {
       collapsed: false
     }).addTo(myMap);
-  }
+
+
+}
 
 
 
@@ -105,3 +127,4 @@ createMap(earthquakes);
           radius: markerRadius(feature.properties.mag)
       };
   }
+
