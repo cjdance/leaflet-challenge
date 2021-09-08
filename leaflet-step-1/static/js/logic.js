@@ -15,7 +15,6 @@ d3.json(url).then(function(data) {
         "<p>Depth: " + feature.geometry.coordinates[2] + "km<p>");
     }
   
-    
     var earthquakes = L.geoJSON(earthquakeData, {
       onEachFeature: onEachFeature
     });
@@ -66,4 +65,22 @@ d3.json(url).then(function(data) {
     L.control.layers(baseMaps, overlayMaps, {
       collapsed: false
     }).addTo(myMap);
+  }
+
+
+  function markerColor(depth) {
+      switch (true) {
+            case depth < 10:
+                return "green";
+            case (10 <= depth & depth < 30):
+                return "yellow";
+            case (30 <= depth & depth < 50):
+                return "orange";
+            case (50 <= depth & depth < 70):
+                return "palered";
+            case (70 <= depth & depth < 90):
+                return "red";
+            case depth >= 90:
+                return "black";
+      }
   }
